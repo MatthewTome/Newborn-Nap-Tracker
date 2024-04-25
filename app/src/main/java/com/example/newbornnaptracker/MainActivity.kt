@@ -1,9 +1,11 @@
 package com.example.newbornnaptracker
 
+// Default
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,21 +14,25 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.newbornnaptracker.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
+// Spotify
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+
+import com.spotify.protocol.client.Subscription
+import com.spotify.protocol.types.PlayerState
 import com.spotify.protocol.types.Track
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var webView: WebView
 
-    // Create an instance of SpotifyAuthManager
-    private val spotifyAuthManager = SpotifyAuthManager(this)
-
-    private val clientId = "ad0911afa57949bba362003f601876b2"
-    private val redirectUri = "https://com.spotify.android.spotifysdkkotlindemo/callback"
+    // Spotify
+//    private val spotifyAuthManager = SpotifyAuthManager(this)
+    private val clientId = "145482b8ab3a4235a76b867086cc30d0"
+    private val redirectUri = "http://localhost:8080"
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +54,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Spotify
     override fun onStart() {
         super.onStart()
-        spotifyAuthManager.startAuthenticationFlow()
+//        spotifyAuthManager.startAuthenticationFlow()
         val connectionParams = ConnectionParams.Builder(clientId)
             .setRedirectUri(redirectUri)
             .showAuthView(true)

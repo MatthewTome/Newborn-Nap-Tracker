@@ -52,8 +52,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Spotify
-    implementation(libs.spotify.auth)
-    implementation(libs.spotify.remote)
-    implementation(libs.spotify.app.remote.release)
+    implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
+//    implementation(libs.spotify.auth)
+//    implementation(libs.spotify.remote)
     implementation(libs.gson)
+//    implementation(libs.androidx.browser)
+//    implementation(libs.androidx.webkit)
 }
