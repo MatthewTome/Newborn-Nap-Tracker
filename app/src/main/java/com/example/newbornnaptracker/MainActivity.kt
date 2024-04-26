@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     // Spotify
 //    private val spotifyAuthManager = SpotifyAuthManager(this)
-    private val clientId = "145482b8ab3a4235a76b867086cc30d0"
+    private val clientId = "0b80095587c94433adf7511d4463ee4e"
     private val redirectUri = "http://localhost:8080"
     private var spotifyAppRemote: SpotifyAppRemote? = null
 
