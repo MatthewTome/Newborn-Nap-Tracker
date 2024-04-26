@@ -11,9 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.newbornnaptracker.databinding.FragmentSecondBinding
 import java.util.Calendar
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null

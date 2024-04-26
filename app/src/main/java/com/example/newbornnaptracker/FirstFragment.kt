@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.newbornnaptracker.databinding.FragmentFirstBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
+
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
@@ -35,6 +33,9 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        binding.buttonSleepCycle.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SleepCycleFragment)
+        }
     }
 
     override fun onDestroyView() {
@@ -44,7 +45,7 @@ class FirstFragment : Fragment() {
 }
 
 
-
+// Spotify Version WIP
 //package com.example.newbornnaptracker
 //
 //import android.os.Bundle
