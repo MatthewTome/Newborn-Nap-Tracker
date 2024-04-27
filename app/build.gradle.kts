@@ -36,6 +36,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        resources {
+            excludes += "META-INF/DEPENDENCIES"
+        }
+    }
 }
 
 dependencies {
@@ -57,9 +62,15 @@ dependencies {
 
     // Spotify
     implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
+    implementation(libs.gson)
 //    implementation(libs.spotify.auth)
 //    implementation(libs.spotify.remote)
-    implementation(libs.gson)
 //    implementation(libs.androidx.browser)
 //    implementation(libs.androidx.webkit)
+
+    // Google Calender
+    implementation(libs.google.api.client)
+    implementation(libs.google.oauth.client.jetty)
+    implementation(libs.google.api.services.calendar)
+//    implementation(libs.play.services.auth)
 }

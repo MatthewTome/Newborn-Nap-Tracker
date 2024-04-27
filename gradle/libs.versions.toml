@@ -1,6 +1,9 @@
 [versions]
 agp = "8.3.2"
 browser = "1.8.0"
+googleApiClient = "2.0.0"
+googleApiServicesCalendar = "v3-rev20220715-2.0.0"
+googleOauthClientJetty = "1.34.1"
 gson = "2.10.1"
 kotlin = "1.9.0"
 coreKtx = "1.13.0"
@@ -12,33 +15,41 @@ material = "1.11.0"
 constraintlayout = "2.1.4"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
+playServicesAuth = "21.1.0"
 spotifyAuth = "2.0.0"
 spotifyRemote = "2.0.0"
 webkit = "1.10.0"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.7.0"
 lifecycleViewmodelKtx = "2.7.0"
-fragmentKtx = "1.5.6"
+fragmentKtx = "1.6.2"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
-spotify-auth = { group = "com.spotify.android", name = "auth", version.ref = "spotifyAuth" }
-spotify-remote = { group = "com.spotify.android", name = "remote", version.ref = "spotifyRemote" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+
+google-api-client = { module = "com.google.api-client:google-api-client", version.ref = "googleApiClient" }
+google-api-services-calendar = { module = "com.google.apis:google-api-services-calendar", version.ref = "googleApiServicesCalendar" }
+google-oauth-client-jetty = { module = "com.google.oauth-client:google-oauth-client-jetty", version.ref = "googleOauthClientJetty" }
+
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+spotify-auth = { group = "com.spotify.android", name = "auth", version.ref = "spotifyAuth" }
+spotify-remote = { group = "com.spotify.android", name = "remote", version.ref = "spotifyRemote" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

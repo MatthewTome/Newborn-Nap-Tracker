@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.newbornnaptracker.databinding.FragmentFirstBinding
 
-
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
