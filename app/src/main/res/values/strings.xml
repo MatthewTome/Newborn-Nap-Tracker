@@ -7,6 +7,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="add">Add</string>
+    <string name="show_image">Show</string>
+    <string name="hide_image">Hide</string>
 
     <string name="nap_schedule">
         Upcoming Naps Today:\n\n

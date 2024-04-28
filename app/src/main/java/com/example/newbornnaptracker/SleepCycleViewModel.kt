@@ -9,33 +9,24 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 class SleepCycleViewModel : ViewModel() {
-    private val sleepWakeEvents = mutableListOf<SleepWakeEvent>()
-    private val estimates = mutableListOf<Pair<LocalDateTime, Duration>>()
+    fun trackSleep(lastSleepTime: String): String {
+        val lastSleepTimeHours = lastSleepTime.substring(0, lastSleepTime.length - 2).toIntOrNull() ?: 0
+        val lastSleepTimeAmPm = lastSleepTime.substring(lastSleepTime.length - 2)
 
-    private val _estimatesLiveData = MutableLiveData<List<Pair<LocalDateTime, Duration>>>()
-    val estimatesLiveData: LiveData<List<Pair<LocalDateTime, Duration>>> = _estimatesLiveData
+        var nextSleepTimeHours = lastSleepTimeHours + 4
+        var nextSleepTimeAmPm = if (lastSleepTimeAmPm.equals("AM", ignoreCase = true)) "PM" else "AM"
 
-    private val _predictionLiveData = MutableLiveData<Pair<LocalDateTime, LocalDateTime>>()
-    val predictionLiveData: LiveData<Pair<LocalDateTime, LocalDateTime>> = _predictionLiveData
+        if (nextSleepTimeHours >= 12) {
+            nextSleepTimeHours -= 12
+            nextSleepTimeAmPm = if (nextSleepTimeAmPm == "AM") "PM" else "AM"
+        }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addSleepWakeEvent(event: SleepWakeEvent) {
-        sleepWakeEvents.add(event)
-        updateEstimates()
-        updatePrediction()
-    }
+        if (nextSleepTimeHours == 0) {
+            nextSleepTimeHours = 12
+        }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun updateEstimates() {
-        estimates.clear()
-        estimates.addAll(estimateCircadianRhythm(sleepWakeEvents, 3))
-        _estimatesLiveData.value = estimates
-    }
+        val formattedNextSleepTimeHours = nextSleepTimeHours.toString().padStart(2, '0')
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun updatePrediction() {
-        val lastWakeTime = sleepWakeEvents.lastOrNull()?.wakeTime ?: return
-        val prediction = predictNextSleepWake(estimates, lastWakeTime)
-        _predictionLiveData.value = prediction
+        return "$formattedNextSleepTimeHours:00 $nextSleepTimeAmPm"
     }
 }

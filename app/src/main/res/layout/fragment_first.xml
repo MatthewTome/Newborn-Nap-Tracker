@@ -12,13 +12,32 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/button_first"
+            android:id="@+id/button_sleep_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Sleep Cycle"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_nap"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_add_nap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add"
-            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toStartOf="@+id/sign_in_button"
+            app:layout_constraintStart_toEndOf="@+id/button_sleep_cycle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_add_nap"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -27,37 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/nap_schedule"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_first" />
-
-        <Button
-            android:id="@+id/button_sleep_cycle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:text="Sleep Cycle"
-            app:layout_constraintEnd_toStartOf="@id/button_first"
-            app:layout_constraintTop_toTopOf="@id/button_first"
-            tools:layout_editor_absoluteY="-1dp" />
-
-<!--        <com.google.android.gms.common.SignInButton-->
-<!--            android:id="@+id/sign_in_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            app:layout_constraintStart_toEndOf="@id/button_first"-->
-<!--            app:layout_constraintTop_toTopOf="@id/button_first" />-->
-
-
-        <!--        <WebView-->
-        <!--            android:id="@+id/webView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            tools:layout_editor_absoluteX="16dp"-->
-        <!--            tools:layout_editor_absoluteY="141dp" />-->
+            app:layout_constraintTop_toBottomOf="@+id/button_add_nap" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
