@@ -18,7 +18,7 @@ playServicesAuth = "21.1.0"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.7.0"
 lifecycleViewmodelKtx = "2.7.0"
-fragmentKtx = "1.6.2"
+fragmentKtx = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
