@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.newbornnaptracker.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 // Spotify
 import com.spotify.android.appremote.api.ConnectionParams
@@ -31,10 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageView: ImageView
-//    private lateinit var webView: WebView
 
     // Spotify
-//    private val spotifyAuthManager = SpotifyAuthManager(this)Spotify
     private val clientId = "0b80095587c94433adf7511d4463ee4e"
     private val redirectUri = "http://localhost:8080"
     private var spotifyAppRemote: SpotifyAppRemote? = null
