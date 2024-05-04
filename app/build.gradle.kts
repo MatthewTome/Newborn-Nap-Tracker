@@ -63,10 +63,6 @@ dependencies {
     // Spotify
     implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
     implementation(libs.gson)
-//    implementation(libs.spotify.auth)
-//    implementation(libs.spotify.remote)
-//    implementation(libs.androidx.browser)
-//    implementation(libs.androidx.webkit)
 
     // Google Calender
     implementation(libs.google.api.client)
