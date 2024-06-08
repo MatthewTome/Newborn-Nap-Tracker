@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.newbornnaptracker">
-    <!-- Spotify -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewbornNapTracker"
         tools:targetApi="31">
+
         <activity
             android:name=".MusicPlayerActivity"
             android:exported="false"
@@ -28,10 +29,16 @@
             android:theme="@style/Theme.NewbornNapTracker">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Declare the MusicService here -->
+        <service
+            android:name=".MusicService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"/>
+
     </application>
 
 </manifest>
