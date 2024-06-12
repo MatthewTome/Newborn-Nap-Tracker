@@ -75,10 +75,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Spotify
-    implementation(files("libs/spotify-app-remote-release-0.8.0.aar"))
-    implementation(libs.gson)
-
     // Google Calender
     implementation(libs.google.api.client)
     implementation(libs.google.oauth.client.jetty)

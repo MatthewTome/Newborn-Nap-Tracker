@@ -1,12 +1,6 @@
 package com.example.newbornnaptracker
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.time.Duration
-import java.time.LocalDateTime
 
 class SleepCycleViewModel : ViewModel() {
     fun trackSleep(lastSleepTime: String): String {

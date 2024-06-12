@@ -36,9 +36,6 @@ class SecondFragment : Fragment() {
 
         // Set the OnDateChangeListener to handle date selection
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val selectedDate = Calendar.getInstance().apply {
-                set(year, month, dayOfMonth)
-            }
 
             // Add an event to the calendar
             val eventTitle = "My Event"
