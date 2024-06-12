@@ -31,4 +31,5 @@
     <string name="play">Play</string>
     <string name="exit">Exit</string>
     <string name="next_recommended_sleep_time">Next recommended sleep time: %1$s</string>
+    <string name="title_activity_google_calendar">GoogleCalendarActivity</string>
 </resources>
