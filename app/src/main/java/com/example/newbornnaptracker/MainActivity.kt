@@ -1,18 +1,22 @@
 package com.example.newbornnaptracker
 
-// Default
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.newbornnaptracker.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +24,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageView: ImageView
     private lateinit var openMusicPlayerButton: Button
+    private lateinit var openGoogleCalendarButton: Button
+    private lateinit var googleCalendarService: GoogleCalendarService
+
+    private val authLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val authorizationCode = result.data?.getStringExtra("code")
+            if (authorizationCode != null) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        googleCalendarService.listEvents()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +60,23 @@ class MainActivity : AppCompatActivity() {
         openMusicPlayerButton.setOnClickListener {
             val intent = Intent(this, MusicPlayerActivity::class.java)
             startActivity(intent)
+        }
+
+        // Initialize the GoogleCalendarService
+        googleCalendarService = GoogleCalendarService(this, authLauncher)
+
+        // Set up the button to trigger Google Calendar functionality
+        openGoogleCalendarButton = findViewById(R.id.open_google_calendar_button)
+        openGoogleCalendarButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val authUrl = googleCalendarService.getAuthorizationCode()
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
+                        authLauncher.launch(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
