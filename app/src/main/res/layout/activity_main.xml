@@ -30,15 +30,6 @@
         app:srcCompat="@drawable/spotifywidget" />
 
     <Button
-        android:id="@+id/open_google_calendar_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_google_calendar"
-        app:layout_constraintBottom_toTopOf="@id/imageView"
-        app:layout_anchorGravity="right"/>
-
-
-    <Button
         android:id="@+id/open_music_player_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

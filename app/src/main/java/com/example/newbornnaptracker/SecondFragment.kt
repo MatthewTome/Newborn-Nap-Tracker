@@ -38,12 +38,12 @@ class SecondFragment : Fragment() {
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
 
             // Add an event to the calendar
-            val eventTitle = "My Event"
+            val eventTitle = "Nap"
             val eventStartTime = Calendar.getInstance().apply {
-                set(year, month, dayOfMonth, 10, 0) // 10:00 AM
+                set(year, month, dayOfMonth, 10, 0)
             }
             val eventEndTime = Calendar.getInstance().apply {
-                set(year, month, dayOfMonth, 11, 0) // 11:00 AM
+                set(year, month, dayOfMonth, 11, 0)
             }
 
             val intent = Intent(Intent.ACTION_INSERT)

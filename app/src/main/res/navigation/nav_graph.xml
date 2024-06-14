@@ -33,4 +33,5 @@
         android:name="com.example.newbornnaptracker.SleepCycleFragment"
         android:label="Sleep Cycle"
         tools:layout="@layout/fragment_sleep_cycle" />
+
 </navigation>

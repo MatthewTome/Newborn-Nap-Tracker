@@ -1,26 +1,29 @@
 package com.example.newbornnaptracker
 
 import androidx.lifecycle.ViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SleepCycleViewModel : ViewModel() {
-    fun trackSleep(lastSleepTime: String): String {
-        val lastSleepTimeHours = lastSleepTime.substring(0, lastSleepTime.length - 2).toIntOrNull() ?: 0
-        val lastSleepTimeAmPm = lastSleepTime.substring(lastSleepTime.length - 2)
+    fun trackSleep(lastSleepTime: String): List<String> {
+        val inputFormat = SimpleDateFormat("h:mma", Locale.US)
+        val outputFormat = SimpleDateFormat("h:mm a", Locale.US)
 
-        var nextSleepTimeHours = lastSleepTimeHours + 4
-        var nextSleepTimeAmPm = if (lastSleepTimeAmPm.equals("AM", ignoreCase = true)) "PM" else "AM"
+        try {
+            val date = inputFormat.parse(lastSleepTime)
+            val calendar = Calendar.getInstance()
+            calendar.time = date!!
 
-        if (nextSleepTimeHours >= 12) {
-            nextSleepTimeHours -= 12
-            nextSleepTimeAmPm = if (nextSleepTimeAmPm == "AM") "PM" else "AM"
+            val sleepTimes = mutableListOf<String>()
+
+            for (i in 0 until 3) {
+                calendar.add(Calendar.MINUTE, if (i == 0) 90 else 180)
+                sleepTimes.add(outputFormat.format(calendar.time))
+            }
+
+            return sleepTimes
+        } catch (e: Exception) {
+            return listOf("Invalid time format")
         }
-
-        if (nextSleepTimeHours == 0) {
-            nextSleepTimeHours = 12
-        }
-
-        val formattedNextSleepTimeHours = nextSleepTimeHours.toString().padStart(2, '0')
-
-        return "$formattedNextSleepTimeHours:00 $nextSleepTimeAmPm"
     }
 }

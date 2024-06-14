@@ -11,13 +11,7 @@
     <string name="show_image">Show</string>
     <string name="hide_image">Hide</string>
 
-    <string name="nap_schedule">
-        Upcoming Naps Today:\n\n
-        3pm\n\n
-        5pm\n\n
-        7pm\n\n
-        Bedtime @9pm
-    </string>
+    <string name="no_naps_scheduled">No naps scheduled yet. Use the Sleep Cycle button to plan naps.</string>
 
     <string-array name="sound_list">
         <item>Lullaby</item>
@@ -30,8 +24,16 @@
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="exit">Exit</string>
-    <string name="next_recommended_sleep_time">Next recommended sleep time: %1$s</string>
+    <string name="next_recommended_sleep_time">Start looking for sleepy cues at %1$s</string>
     <string name="title_activity_google_calendar">GoogleCalendarActivity</string>
     <string name="open_google_calendar">Open Google Calendar</string>
     <string name="music_player">Music Player</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="view_calendar">View Calendar</string>
+    <string name="sleep_cycle">Sleep Cycle</string>
+    <string name="track_sleep">Calculate</string>
+    <string name="enter_last_sleep_time_e_g_3_30pm">Enter time baby woke up (e.g., 3:30pm)</string>
+    <string name="invalid_time_format">Invalid time format</string>
+    <string name="next_predicted_sleep_time">The next sleep time after that will likely be: %1$s</string>
+    <string name="and_then_sleep_time">And then after that around: %1$s</string>
 </resources>
