@@ -15,6 +15,7 @@ class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
+    private val babyName = "Dawson"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +39,7 @@ class SecondFragment : Fragment() {
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
 
             // Add an event to the calendar
-            val eventTitle = "Nap"
+            val eventTitle = "$babyName's Nap"
             val eventStartTime = Calendar.getInstance().apply {
                 set(year, month, dayOfMonth, 10, 0)
             }
