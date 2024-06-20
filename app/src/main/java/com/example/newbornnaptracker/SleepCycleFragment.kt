@@ -34,28 +34,38 @@ class SleepCycleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize the spinners
-        val hours = (1..12).map { it.toString() }
-        val minutes = (0..59).map { String.format(Locale.US, "%02d", it) }
-        val amPm = listOf("AM", "PM")
+        // Initialize the hour picker
+        binding.hourPicker.minValue = 1
+        binding.hourPicker.maxValue = 12
+        binding.hourPicker.wrapSelectorWheel = true
 
-        val hourAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, hours)
-        hourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.hourSpinner.adapter = hourAdapter
+        // Initialize the minute picker
+        binding.minutePicker.minValue = 0
+        binding.minutePicker.maxValue = 59
+        binding.minutePicker.wrapSelectorWheel = true
+        binding.minutePicker.setFormatter { i -> String.format(Locale.US, "%02d", i) }
 
-        val minuteAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, minutes)
-        minuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.minuteSpinner.adapter = minuteAdapter
+        // Initialize the AM/PM picker
+        val amPmValues = arrayOf("AM", "PM")
+        binding.amPmPicker.minValue = 0
+        binding.amPmPicker.maxValue = amPmValues.size - 1
+        binding.amPmPicker.displayedValues = amPmValues
+        binding.amPmPicker.wrapSelectorWheel = true
 
-        val amPmAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, amPm)
-        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.amPmSpinner.adapter = amPmAdapter
+        // Handle the change in hour to update AM/PM
+        binding.hourPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            if (oldVal == 12 && newVal == 1) {
+                binding.amPmPicker.value = (binding.amPmPicker.value + 1) % 2
+            } else if (oldVal == 1 && newVal == 12) {
+                binding.amPmPicker.value = (binding.amPmPicker.value + 1) % 2
+            }
+        }
 
         binding.trackSleepButton.setOnClickListener {
-            val hour = binding.hourSpinner.selectedItem.toString()
-            val minute = binding.minuteSpinner.selectedItem.toString()
-            val period = binding.amPmSpinner.selectedItem.toString()
-            val sleepTime = "$hour:$minute$period"
+            val hour = binding.hourPicker.value
+            val minute = binding.minutePicker.value
+            val period = amPmValues[binding.amPmPicker.value]
+            val sleepTime = String.format(Locale.US, "%d:%02d%s", hour, minute, period)
             val recommendations = viewModel.trackSleep(sleepTime)
             displayRecommendations(recommendations)
 
