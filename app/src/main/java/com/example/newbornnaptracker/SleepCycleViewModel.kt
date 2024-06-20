@@ -32,9 +32,8 @@ class SleepCycleViewModel : ViewModel() {
         }
     }
 
-    fun addToCalendar(context: Context, sleepTime: String) {
-        val inputFormat = SimpleDateFormat("h:mma", Locale.US)
-        val date = inputFormat.parse(sleepTime)
+    fun addToCalendar(context: Context) {
+        SimpleDateFormat("h:mma", Locale.US)
 
         val calendarId = getDefaultCalendarId(context)
         if (calendarId == -1L) {
@@ -42,7 +41,8 @@ class SleepCycleViewModel : ViewModel() {
             return
         }
 
-        val startMillis = date?.time ?: return
+        val currentDate = Date() // current date and time
+        val startMillis = currentDate.time
         val endMillis = startMillis + 60 * 60 * 1000 // 1 hour duration
 
         val values = ContentValues().apply {

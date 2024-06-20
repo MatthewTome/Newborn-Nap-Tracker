@@ -39,7 +39,7 @@ class SleepCycleFragment : Fragment() {
             displayRecommendations(recommendations)
 
             if (checkCalendarPermissions()) {
-                viewModel.addToCalendar(requireContext(), sleepTime)
+                viewModel.addToCalendar(requireContext())
                 Toast.makeText(context, "Sleep time added to calendar.", Toast.LENGTH_LONG).show()
                 Log.d("SleepCycleFragment", "Attempted to add sleep time: $sleepTime")
             } else {
@@ -95,7 +95,7 @@ class SleepCycleFragment : Fragment() {
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     // All permissions were granted, add event to calendar
                     val sleepTime = binding.sleepTimeInput.text.toString()
-                    viewModel.addToCalendar(requireContext(), sleepTime)
+                    viewModel.addToCalendar(requireContext())
                     Toast.makeText(context, "Sleep time added to calendar", Toast.LENGTH_SHORT).show()
                 } else {
                     // Permission denied, show a message to the user

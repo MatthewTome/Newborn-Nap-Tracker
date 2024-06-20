@@ -18,35 +18,39 @@
 
     <Button
         android:id="@+id/play_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/play"
         app:layout_constraintTop_toBottomOf="@id/sound_spinner"
-        android:layout_gravity="bottom" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:id="@+id/pause_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pause"
         app:layout_constraintTop_toBottomOf="@id/play_button"
-        android:layout_gravity="bottom"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:id="@+id/stop_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/stop"
         app:layout_constraintTop_toBottomOf="@id/pause_button"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_gravity="bottom" />
 
     <Button
         android:id="@+id/back_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exit"
         app:layout_constraintTop_toBottomOf="@id/stop_button"
-        android:layout_gravity="bottom" />
+        app:layout_constraintEnd_toEndOf="@id/play_button"
+        android:layout_gravity="center_horizontal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
