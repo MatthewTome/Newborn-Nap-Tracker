@@ -11,8 +11,8 @@ import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
 import android.text.Html
 import android.Manifest
 import android.content.pm.PackageManager
-import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import java.util.Locale
 
@@ -22,6 +22,17 @@ class SleepCycleFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SleepCycleViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            viewModel.addToCalendar(requireContext())
+            Toast.makeText(context, "Added to calendar", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Calendar permissions are required to add events", Toast.LENGTH_LONG).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +64,7 @@ class SleepCycleFragment : Fragment() {
         binding.amPmPicker.wrapSelectorWheel = true
 
         // Handle the change in hour to update AM/PM
-        binding.hourPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+        binding.hourPicker.setOnValueChangedListener { _, oldVal, newVal ->
             if (oldVal == 12 && newVal == 1) {
                 binding.amPmPicker.value = (binding.amPmPicker.value + 1) % 2
             } else if (oldVal == 1 && newVal == 12) {
@@ -109,39 +120,16 @@ class SleepCycleFragment : Fragment() {
     }
 
     private fun requestCalendarPermissions() {
-        requestPermissions(
+        requestPermissionLauncher.launch(
             arrayOf(
                 Manifest.permission.WRITE_CALENDAR,
                 Manifest.permission.READ_CALENDAR
-            ),
-            CALENDAR_PERMISSION_REQUEST_CODE
+            )
         )
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            CALENDAR_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    // All permissions were granted, add event to calendar
-//                    val sleepTime = binding.sleepTimeInput.text.toString()
-                    viewModel.addToCalendar(requireContext())
-                    Toast.makeText(context, "Added to calendar", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Permission denied, show a message to the user
-                    Toast.makeText(context, "Calendar permissions are required to add events", Toast.LENGTH_LONG).show()
-                }
-                return
-            }
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val CALENDAR_PERMISSION_REQUEST_CODE = 100
     }
 }

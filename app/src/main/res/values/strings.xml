@@ -36,4 +36,5 @@
     <string name="invalid_time_format">Invalid time format</string>
     <string name="next_predicted_sleep_time">The next sleep time after that will likely be: %1$s</string>
     <string name="and_then_sleep_time">And then after that around: %1$s</string>
+    <string name="sleep_cycle_question">What time did your baby fall asleep?</string>
 </resources>
