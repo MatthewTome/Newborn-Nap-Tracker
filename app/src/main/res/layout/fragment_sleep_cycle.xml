@@ -8,13 +8,28 @@
     android:padding="16dp"
     tools:context=".SleepCycleFragment">
 
-    <EditText
-        android:id="@+id/sleepTimeInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:hint="@string/enter_last_sleep_time_e_g_3_30pm"
-        android:inputType="text" />
+    <Spinner
+        android:id="@+id/hour_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/minute_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/am_pm_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+<!--    <EditText-->
+<!--        android:id="@+id/sleepTimeInput"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:autofillHints=""-->
+<!--        android:hint="@string/enter_last_sleep_time_e_g_3_30pm"-->
+<!--        android:inputType="text" />-->
 
     <Button
         android:id="@+id/trackSleepButton"

@@ -11,9 +11,10 @@ import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
 import android.text.Html
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import java.util.Locale
 
 class SleepCycleFragment : Fragment() {
 
@@ -33,15 +34,34 @@ class SleepCycleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize the spinners
+        val hours = (1..12).map { it.toString() }
+        val minutes = (0..59).map { String.format(Locale.US, "%02d", it) }
+        val amPm = listOf("AM", "PM")
+
+        val hourAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, hours)
+        hourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.hourSpinner.adapter = hourAdapter
+
+        val minuteAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, minutes)
+        minuteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.minuteSpinner.adapter = minuteAdapter
+
+        val amPmAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, amPm)
+        amPmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.amPmSpinner.adapter = amPmAdapter
+
         binding.trackSleepButton.setOnClickListener {
-            val sleepTime = binding.sleepTimeInput.text.toString()
+            val hour = binding.hourSpinner.selectedItem.toString()
+            val minute = binding.minuteSpinner.selectedItem.toString()
+            val period = binding.amPmSpinner.selectedItem.toString()
+            val sleepTime = "$hour:$minute$period"
             val recommendations = viewModel.trackSleep(sleepTime)
             displayRecommendations(recommendations)
 
             if (checkCalendarPermissions()) {
                 viewModel.addToCalendar(requireContext())
                 Toast.makeText(context, "Sleep time added to calendar.", Toast.LENGTH_LONG).show()
-                Log.d("SleepCycleFragment", "Attempted to add sleep time: $sleepTime")
             } else {
                 requestCalendarPermissions()
             }
@@ -94,9 +114,9 @@ class SleepCycleFragment : Fragment() {
             CALENDAR_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     // All permissions were granted, add event to calendar
-                    val sleepTime = binding.sleepTimeInput.text.toString()
+//                    val sleepTime = binding.sleepTimeInput.text.toString()
                     viewModel.addToCalendar(requireContext())
-                    Toast.makeText(context, "Sleep time added to calendar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Added to calendar", Toast.LENGTH_SHORT).show()
                 } else {
                     // Permission denied, show a message to the user
                     Toast.makeText(context, "Calendar permissions are required to add events", Toast.LENGTH_LONG).show()
