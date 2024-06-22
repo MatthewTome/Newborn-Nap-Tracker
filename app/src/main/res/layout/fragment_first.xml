@@ -30,6 +30,14 @@
             app:layout_constraintStart_toEndOf="@+id/button_sleep_cycle"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/button_music_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/music_player"
+            app:layout_constraintStart_toEndOf="@+id/button_add_nap"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textview_first"
             android:layout_width="wrap_content"

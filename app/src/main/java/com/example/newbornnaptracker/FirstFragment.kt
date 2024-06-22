@@ -35,6 +35,10 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SleepCycleFragment)
         }
 
+        binding.buttonMusicPlayer.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_MusicPlayerFragment)
+        }
+
         sharedViewModel.sleepRecommendations.observe(viewLifecycleOwner) { recommendations ->
             displayRecommendations(recommendations)
         }

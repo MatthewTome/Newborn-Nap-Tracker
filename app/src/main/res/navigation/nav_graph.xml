@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SleepCycleFragment"
             app:destination="@id/SleepCycleFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_MusicPlayerFragment"
+            app:destination="@id/MusicPlayerFragment" />
     </fragment>
 
     <fragment
@@ -33,5 +36,15 @@
         android:name="com.example.newbornnaptracker.SleepCycleFragment"
         android:label="Sleep Cycle"
         tools:layout="@layout/fragment_sleep_cycle" />
+
+    <fragment
+        android:id="@+id/MusicPlayerFragment"
+        android:name="com.example.newbornnaptracker.MusicPlayerFragment"
+        android:label="@string/music_player_fragment_label"
+        tools:layout="@layout/fragment_music_player">
+        <action
+            android:id="@+id/action_FirstFragment_to_MusicPlayerFragment"
+            app:destination="@id/MusicPlayerFragment" />
+    </fragment>
 
 </navigation>
