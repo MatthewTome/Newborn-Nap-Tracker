@@ -1,11 +1,9 @@
 package com.example.newbornnaptracker
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -19,7 +17,6 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener  {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageView: ImageView
-    private lateinit var openMusicPlayerButton: Button
     private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,14 +32,7 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener  {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         imageView = findViewById(R.id.imageView)
-
         mediaPlayer = MediaPlayer.create(this, R.raw.lullaby)
-
-        openMusicPlayerButton = findViewById(R.id.open_music_player_button)
-        openMusicPlayerButton.setOnClickListener {
-            val intent = Intent(this, MusicPlayerActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -101,9 +91,21 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener  {
     override fun setSound(resourceId: Int) {
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer.create(this, resourceId)
+        updateImage(resourceId)
     }
 
     override fun isPlaying(): Boolean {
         return mediaPlayer?.isPlaying == true
+    }
+
+    private fun updateImage(resourceId: Int) {
+        val imageResId = when (resourceId) {
+            R.raw.lullaby -> R.drawable.lullaby
+            R.raw.rain -> R.drawable.rain
+            else -> 0  // Default case, no image
+        }
+        if (imageResId != 0) {
+            imageView.setImageResource(imageResId)
+        }
     }
 }

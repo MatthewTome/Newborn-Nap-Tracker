@@ -52,6 +52,8 @@ class MusicPlayerFragment : Fragment() {
                 }
                 if (listener?.isPlaying() == false) {
                     listener?.setSound(selectedSoundResourceId)
+                } else {
+                    listener?.setSound(selectedSoundResourceId)  // Always set the sound to update the image
                 }
             }
 
