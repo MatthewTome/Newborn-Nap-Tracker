@@ -11,33 +11,6 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <Button
-            android:id="@+id/button_sleep_cycle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/sleep_cycle"
-            app:layout_constraintEnd_toStartOf="@+id/button_add_nap"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_add_nap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add"
-            app:layout_constraintStart_toEndOf="@+id/button_sleep_cycle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_music_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/music_player"
-            app:layout_constraintStart_toEndOf="@+id/button_add_nap"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textview_first"
             android:layout_width="wrap_content"
@@ -46,7 +19,7 @@
             android:text="@string/no_naps_scheduled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_add_nap" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

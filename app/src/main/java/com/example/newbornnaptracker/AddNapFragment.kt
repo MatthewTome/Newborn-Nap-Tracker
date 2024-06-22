@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.newbornnaptracker.databinding.FragmentSecondBinding
+import com.example.newbornnaptracker.databinding.FragmentAddNapBinding
 import java.util.Calendar
 
-class SecondFragment : Fragment() {
+class AddNapFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentAddNapBinding? = null
     private val binding get() = _binding!!
     private val babyName = "Dawson"
 
@@ -21,7 +21,7 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentAddNapBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,7 +29,7 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            findNavController().navigate(R.id.action_AddNapFragment_to_FirstFragment)
         }
 
         // Set the initial date for the calendar

@@ -11,8 +11,8 @@
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_AddNapFragment"
+            app:destination="@id/AddNapFragment" />
         <action
             android:id="@+id/action_FirstFragment_to_SleepCycleFragment"
             app:destination="@id/SleepCycleFragment" />
@@ -22,12 +22,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.newbornnaptracker.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/AddNapFragment"
+        android:name="com.example.newbornnaptracker.AddNapFragment"
+        android:label="@string/add_nap_fragment_label"
+        tools:layout="@layout/fragment_add_nap">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_AddNapFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 
@@ -41,10 +41,5 @@
         android:id="@+id/MusicPlayerFragment"
         android:name="com.example.newbornnaptracker.MusicPlayerFragment"
         android:label="@string/music_player_fragment_label"
-        tools:layout="@layout/fragment_music_player">
-        <action
-            android:id="@+id/action_FirstFragment_to_MusicPlayerFragment"
-            app:destination="@id/MusicPlayerFragment" />
-    </fragment>
-
+        tools:layout="@layout/fragment_music_player" />
 </navigation>

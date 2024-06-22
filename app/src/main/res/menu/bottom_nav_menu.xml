@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/SleepCycleFragment"
+        android:icon="@drawable/ic_sleep_cycle"
+        android:title="@string/sleep_cycle" />
+    <item
+        android:id="@id/AddNapFragment"
+        android:icon="@drawable/ic_add_nap"
+        android:title="@string/add" />
+    <item
+        android:id="@id/MusicPlayerFragment"
+        android:icon="@drawable/ic_music_player"
+        android:title="@string/music_player" />
+</menu>

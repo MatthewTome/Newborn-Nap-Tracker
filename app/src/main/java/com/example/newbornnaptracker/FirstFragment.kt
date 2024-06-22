@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.newbornnaptracker.databinding.FragmentFirstBinding
 import androidx.fragment.app.activityViewModels
+import com.example.newbornnaptracker.databinding.FragmentFirstBinding
 import android.text.Html
 
 class FirstFragment : Fragment() {
@@ -26,18 +25,6 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonAddNap.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
-
-        binding.buttonSleepCycle.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SleepCycleFragment)
-        }
-
-        binding.buttonMusicPlayer.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_MusicPlayerFragment)
-        }
 
         sharedViewModel.sleepRecommendations.observe(viewLifecycleOwner) { recommendations ->
             displayRecommendations(recommendations)
