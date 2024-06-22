@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.SleepCycleFragment, R.id.AddNapFragment, R.id.MusicPlayerFragment)
+            setOf(R.id.HomeFragment, R.id.SleepCycleFragment, R.id.AddNapFragment, R.id.MusicPlayerFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)

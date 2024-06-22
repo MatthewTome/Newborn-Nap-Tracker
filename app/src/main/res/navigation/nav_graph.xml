@@ -3,22 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/HomeFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.newbornnaptracker.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-        <action
-            android:id="@+id/action_FirstFragment_to_AddNapFragment"
-            app:destination="@id/AddNapFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_SleepCycleFragment"
-            app:destination="@id/SleepCycleFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_MusicPlayerFragment"
-            app:destination="@id/MusicPlayerFragment" />
+        android:id="@+id/HomeFragment"
+        android:name="com.example.newbornnaptracker.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
@@ -26,9 +17,6 @@
         android:name="com.example.newbornnaptracker.AddNapFragment"
         android:label="@string/add_nap_fragment_label"
         tools:layout="@layout/fragment_add_nap">
-        <action
-            android:id="@+id/action_AddNapFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
     </fragment>
 
     <fragment
