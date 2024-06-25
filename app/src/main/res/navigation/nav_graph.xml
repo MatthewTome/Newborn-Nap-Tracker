@@ -9,15 +9,13 @@
         android:id="@+id/HomeFragment"
         android:name="com.example.newbornnaptracker.HomeFragment"
         android:label="@string/home_fragment_label"
-        tools:layout="@layout/fragment_home">
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/AddNapFragment"
         android:name="com.example.newbornnaptracker.AddNapFragment"
         android:label="@string/add_nap_fragment_label"
-        tools:layout="@layout/fragment_add_nap">
-    </fragment>
+        tools:layout="@layout/fragment_add_nap" />
 
     <fragment
         android:id="@+id/SleepCycleFragment"
@@ -30,4 +28,10 @@
         android:name="com.example.newbornnaptracker.MusicPlayerFragment"
         android:label="@string/music_player_fragment_label"
         tools:layout="@layout/fragment_music_player" />
+
+    <fragment
+        android:id="@+id/SongListFragment"
+        android:name="com.example.newbornnaptracker.SongListFragment"
+        android:label="@string/song_list_fragment_label"
+        tools:layout="@layout/fragment_song_list" />
 </navigation>

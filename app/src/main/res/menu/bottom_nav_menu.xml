@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_add_nap"
         android:title="@string/add" />
     <item
-        android:id="@id/MusicPlayerFragment"
+        android:id="@id/SongListFragment"
         android:icon="@drawable/ic_music_player"
         android:title="@string/music_player" />
 </menu>

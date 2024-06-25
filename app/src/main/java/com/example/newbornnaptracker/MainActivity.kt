@@ -4,7 +4,10 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,8 +20,14 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var imageView: ImageView
     private var mediaPlayer: MediaPlayer? = null
+
+    private lateinit var albumArtMini: ImageView
+    private lateinit var songNameMini: TextView
+    private lateinit var artistNameMini: TextView
+    private lateinit var playPauseButtonMini: ImageButton
+
+    private var songSelected: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +39,38 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.HomeFragment, R.id.SleepCycleFragment, R.id.AddNapFragment, R.id.MusicPlayerFragment)
+            setOf(R.id.HomeFragment, R.id.SleepCycleFragment, R.id.AddNapFragment, R.id.SongListFragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)
 
-        imageView = findViewById(R.id.imageView)
         mediaPlayer = MediaPlayer.create(this, R.raw.lullaby)
+
+        // Initialize mini player controls
+        albumArtMini = findViewById(R.id.album_art_mini)
+        songNameMini = findViewById(R.id.song_name_mini)
+        artistNameMini = findViewById(R.id.artist_name_mini)
+        playPauseButtonMini = findViewById(R.id.play_pause_button_mini)
+
+        playPauseButtonMini.setOnClickListener {
+            if (isPlaying()) {
+                pauseSound()
+                playPauseButtonMini.setImageResource(R.drawable.ic_play)
+            } else {
+                playSound()
+                playPauseButtonMini.setImageResource(R.drawable.ic_pause)
+            }
+        }
+
+        // Navigate to the full music player when the mini player is clicked
+        findViewById<View>(R.id.music_player_controls).setOnClickListener {
+            navController.navigate(R.id.MusicPlayerFragment)
+        }
+
+        // Add a listener for fragment changes
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            updateMiniPlayerVisibility(destination.id)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -90,21 +124,37 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
     override fun setSound(resourceId: Int) {
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer.create(this, resourceId)
-        updateImage(resourceId)
+        // Notify MusicPlayerFragment to update image
+        val musicPlayerFragment = supportFragmentManager.findFragmentById(R.id.MusicPlayerFragment) as? MusicPlayerFragment
+        musicPlayerFragment?.updateImage(resourceId)
+        // Update mini player controls
+        songSelected = true
+        updateMiniPlayer(resourceId)
     }
 
     override fun isPlaying(): Boolean {
         return mediaPlayer?.isPlaying == true
     }
 
-    private fun updateImage(resourceId: Int) {
-        val imageResId = when (resourceId) {
-            R.raw.lullaby -> R.drawable.lullaby
-            R.raw.rain -> R.drawable.rain
-            else -> 0  // Default case, no image
+    fun updateMiniPlayer(resourceId: Int) {
+        val song = when (resourceId) {
+            R.raw.lullaby -> Song("Lullaby", "Artist 1", R.raw.lullaby)
+            R.raw.rain -> Song("Rain", "Artist 2", R.raw.rain)
+            else -> Song("Unknown", "Unknown Artist", 0)
         }
-        if (imageResId != 0) {
-            imageView.setImageResource(imageResId)
-        }
+        songNameMini.text = song.name
+        artistNameMini.text = song.artist
+        albumArtMini.setImageResource(
+            when (song.resourceId) {
+                R.raw.lullaby -> R.drawable.lullaby
+                R.raw.rain -> R.drawable.rain
+                else -> R.drawable.ic_music_note
+            }
+        )
+    }
+
+    private fun updateMiniPlayerVisibility(currentFragmentId: Int) {
+        val shouldShowMiniPlayer = songSelected && currentFragmentId != R.id.MusicPlayerFragment
+        findViewById<View>(R.id.music_player_controls).visibility = if (shouldShowMiniPlayer) View.VISIBLE else View.GONE
     }
 }
