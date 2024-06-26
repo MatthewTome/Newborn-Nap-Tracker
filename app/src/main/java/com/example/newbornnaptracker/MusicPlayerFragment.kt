@@ -61,10 +61,10 @@ class MusicPlayerFragment : Fragment() {
         playPauseButton.setOnClickListener {
             if (listener?.isPlaying() == true) {
                 listener?.pauseSound()
-                playPauseButton.setImageResource(R.drawable.ic_play)
+                sharedViewModel.setPlaying(false)
             } else {
                 listener?.playSound()
-                playPauseButton.setImageResource(R.drawable.ic_pause)
+                sharedViewModel.setPlaying(true)
             }
         }
 
@@ -105,15 +105,18 @@ class MusicPlayerFragment : Fragment() {
                     val currentPosition = it.getCurrentPosition()
                     seekBar.progress = currentPosition
                     updateCurrentTime(currentPosition)
-                    if (it.isPlaying()) {
-                        playPauseButton.setImageResource(R.drawable.ic_pause)
-                    } else {
-                        playPauseButton.setImageResource(R.drawable.ic_play)
-                    }
                 }
                 handler.postDelayed(this, 1000)
             }
         }, 1000)
+
+        sharedViewModel.isPlaying.observe(viewLifecycleOwner) { isPlaying ->
+            if (isPlaying) {
+                playPauseButton.setImageResource(R.drawable.ic_pause)
+            } else {
+                playPauseButton.setImageResource(R.drawable.ic_play)
+            }
+        }
     }
 
     private fun updateCurrentTime(progress: Int) {

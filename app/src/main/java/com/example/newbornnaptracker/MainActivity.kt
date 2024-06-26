@@ -55,10 +55,10 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         playPauseButtonMini.setOnClickListener {
             if (isPlaying()) {
                 pauseSound()
-                playPauseButtonMini.setImageResource(R.drawable.ic_play)
+                sharedViewModel.setPlaying(false)
             } else {
                 playSound()
-                playPauseButtonMini.setImageResource(R.drawable.ic_pause)
+                sharedViewModel.setPlaying(true)
             }
         }
 
@@ -70,6 +70,17 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
             updateMiniPlayerVisibility(destination.id)
             updateNavigationBarVisibility(destination.id)
         }
+
+        sharedViewModel.isPlaying.observe(this) { isPlaying ->
+            if (isPlaying) {
+                playPauseButtonMini.setImageResource(R.drawable.ic_pause)
+            } else {
+                playPauseButtonMini.setImageResource(R.drawable.ic_play)
+            }
+        }
+
+        // Initialize the play/pause button state
+        sharedViewModel.setPlaying(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -124,8 +135,6 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         mediaPlayer = MediaPlayer.create(this, resourceId)
         songSelected = true
         updateMiniPlayer(resourceId)
-
-        // Notify the SharedViewModel to update the song info
         sharedViewModel.setResourceId(resourceId)
     }
 

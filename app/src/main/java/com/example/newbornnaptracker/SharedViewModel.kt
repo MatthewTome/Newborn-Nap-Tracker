@@ -17,7 +17,14 @@ class SharedViewModel : ViewModel() {
     private val _resourceId = MutableLiveData<Int>()
     val resourceId: LiveData<Int> get() = _resourceId
 
+    private val _isPlaying = MutableLiveData<Boolean>()
+    val isPlaying: LiveData<Boolean> get() = _isPlaying
+
     fun setResourceId(id: Int) {
         _resourceId.value = id
+    }
+
+    fun setPlaying(isPlaying: Boolean) {
+        _isPlaying.value = isPlaying
     }
 }
