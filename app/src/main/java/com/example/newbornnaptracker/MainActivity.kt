@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,13 +22,13 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var mediaPlayer: MediaPlayer? = null
-
     private lateinit var albumArtMini: ImageView
     private lateinit var songNameMini: TextView
     private lateinit var artistNameMini: TextView
     private lateinit var playPauseButtonMini: ImageButton
-
     private var songSelected: Boolean = false
+
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.lullaby)
 
-        // Initialize mini player controls
         albumArtMini = findViewById(R.id.album_art_mini)
         songNameMini = findViewById(R.id.song_name_mini)
         artistNameMini = findViewById(R.id.artist_name_mini)
@@ -62,12 +62,10 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
             }
         }
 
-        // Navigate to the full music player when the mini player is clicked
         findViewById<View>(R.id.music_player_controls).setOnClickListener {
             navController.navigate(R.id.MusicPlayerFragment)
         }
 
-        // Add a listener for fragment changes
         navController.addOnDestinationChangedListener { _, destination, _ ->
             updateMiniPlayerVisibility(destination.id)
             updateNavigationBarVisibility(destination.id)
@@ -96,7 +94,6 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         mediaPlayer?.release()
     }
 
-    // MusicPlayerControlListener methods
     override fun playSound() {
         mediaPlayer?.let {
             if (!it.isPlaying) {
@@ -128,10 +125,8 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         songSelected = true
         updateMiniPlayer(resourceId)
 
-        // Notify MusicPlayerFragment to update the song info
-        val musicPlayerFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
-            ?.childFragmentManager?.fragments?.firstOrNull { it is MusicPlayerFragment } as? MusicPlayerFragment
-        musicPlayerFragment?.updateSongInfo(resourceId)
+        // Notify the SharedViewModel to update the song info
+        sharedViewModel.setResourceId(resourceId)
     }
 
     override fun isPlaying(): Boolean {

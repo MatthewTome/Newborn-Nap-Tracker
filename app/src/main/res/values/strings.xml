@@ -39,7 +39,6 @@
     <string name="add_nap_description">Tap a date to add a nap to your calendar. This helps you track your baby\'s sleep schedule alongside your daily plans.</string>
 
     <!--  -->
-    <string name="title_activity_google_calendar">GoogleCalendarActivity</string>
     <string name="music_player">Music Player</string>
     <string name="view_calendar">View Calendar</string>
     <string name="home">Home</string>

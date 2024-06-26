@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -29,6 +30,8 @@ class MusicPlayerFragment : Fragment() {
 
     private var listener: MusicPlayerControlListener? = null
     private var handler: Handler = Handler(Looper.getMainLooper())
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -120,7 +123,7 @@ class MusicPlayerFragment : Fragment() {
         currentTime.text = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
     }
 
-    fun updateSongInfo(resourceId: Int) {
+    private fun updateSongInfo(resourceId: Int) {
         val song = when (resourceId) {
             R.raw.lullaby -> Song("Lullaby", "Artist 1", R.raw.lullaby)
             R.raw.rain -> Song("Rain", "Artist 2", R.raw.rain)
@@ -141,5 +144,14 @@ class MusicPlayerFragment : Fragment() {
             TimeUnit.MILLISECONDS.toSeconds(seekBar.max.toLong()) -
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(seekBar.max.toLong()))
         )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        sharedViewModel.resourceId.observe(viewLifecycleOwner) { resourceId ->
+            resourceId?.let {
+                updateSongInfo(it)
+            }
+        }
     }
 }
