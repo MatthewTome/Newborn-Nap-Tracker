@@ -50,5 +50,11 @@
     <string name="album_title">Album Title</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="song_list_fragment_label">Songs</string>
+    <string name="save">Save</string>
+    <string name="add_to_calendar">Add to Calendar</string>
+    <string name="years">Years</string>
+    <string name="months">Months</string>
+    <string name="slider_text">How many different babies should we track naps for?</string>
+    <string name="slider">This is a slider</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
+import com.google.android.material.chip.Chip
 import android.text.Html
 import android.Manifest
 import android.content.pm.PackageManager
@@ -84,15 +85,28 @@ class SleepCycleFragment : Fragment() {
 
             displayRecommendations(recommendations)
 
-            if (checkCalendarPermissions()) {
-                viewModel.addToCalendar(requireContext())
-                Toast.makeText(context, "Sleep time added to calendar.", Toast.LENGTH_LONG).show()
-            } else {
-                requestCalendarPermissions()
+            if (binding.addToCalendarChip.isChecked) {
+                if (checkCalendarPermissions()) {
+                    viewModel.addToCalendar(requireContext())
+                    Toast.makeText(context, "Added to calendar", Toast.LENGTH_SHORT).show()
+                } else {
+                    requestCalendarPermissions()
+                }
             }
         }
 
         setupBabyRadioButtons()
+        setupAddToCalendarChip()
+
+        // Observe babyAges LiveData
+        sharedViewModel.babyAges.observe(viewLifecycleOwner) { babyAges ->
+            if (babyAges.isNotEmpty()) {
+                setupNapChips(sharedViewModel.selectedBabyIndex.value ?: 0)
+            } else {
+                // Handle empty list case
+                binding.napChipGroup.removeAllViews()
+            }
+        }
     }
 
     private fun setupBabyRadioButtons() {
@@ -105,13 +119,44 @@ class SleepCycleFragment : Fragment() {
                     id = View.generateViewId()
                     setOnClickListener {
                         sharedViewModel.setSelectedBabyIndex(index)
+                        setupNapChips(index)
                     }
                 }
                 radioGroup.addView(radioButton)
                 if (index == 0) {
                     radioButton.isChecked = true
                     sharedViewModel.setSelectedBabyIndex(index)
+                    setupNapChips(index)
                 }
+            }
+        }
+    }
+
+    private fun setupAddToCalendarChip() {
+        binding.addToCalendarChip.apply {
+            text = context.getString(R.string.add_to_calendar)
+            chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_calendar)
+            isChipIconVisible = true
+            isCheckable = true
+        }
+    }
+
+    private fun setupNapChips(babyIndex: Int) {
+        val napChipGroup = binding.napChipGroup
+        napChipGroup.removeAllViews()
+        val numNaps = sharedViewModel.numNaps.value?.get(babyIndex) ?: 0
+        if (numNaps > 0) {
+            for (i in 1..numNaps) {
+                val chip = Chip(context).apply {
+                    text = i.toString()
+                    isCheckable = true
+                    setChipBackgroundColorResource(R.color.white)
+                    setTextColor(ContextCompat.getColor(context, R.color.black))
+                    setOnClickListener {
+                        // Handle chip click
+                    }
+                }
+                napChipGroup.addView(chip)
             }
         }
     }
@@ -124,10 +169,10 @@ class SleepCycleFragment : Fragment() {
                 val boldTime = "<b>$time</b>"
                 val exclamation = if (index == 0) "!" else ""
                 when (index) {
-                    0 -> getString(R.string.next_recommended_sleep_time, boldTime) + exclamation
-                    1 -> getString(R.string.next_predicted_sleep_time, boldTime)
-                    2 -> getString(R.string.and_then_sleep_time, boldTime)
-                    else -> ""
+                    0 -> "Entered time: $boldTime$exclamation"
+                    1 -> "Next nap: $boldTime"
+                    2 -> "Then: $boldTime"
+                    else -> "Finally: $boldTime"
                 }
             }
             binding.resultTextView.text = Html.fromHtml(formattedRecommendations.joinToString("<br><br>"), Html.FROM_HTML_MODE_COMPACT)

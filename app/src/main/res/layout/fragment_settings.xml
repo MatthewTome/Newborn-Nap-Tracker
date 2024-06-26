@@ -1,21 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".SettingsFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How many different babies should we track naps for?" />
+        android:text="@string/slider_text" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/numBabiesSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/slider"
+        android:stepSize="1.0"
         android:valueFrom="1.0"
-        android:valueTo="5.0"
-        android:stepSize="1.0" />
+        android:valueTo="5.0" />
 
     <LinearLayout
         android:id="@+id/babiesContainer"
@@ -28,6 +32,6 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         android:visibility="gone" />
 </LinearLayout>

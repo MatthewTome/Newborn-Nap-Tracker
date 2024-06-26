@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.newbornnaptracker.databinding.FragmentSettingsBinding
@@ -48,8 +50,27 @@ class SettingsFragment : Fragment() {
                 inputType = android.text.InputType.TYPE_CLASS_NUMBER
                 id = View.generateViewId()
             }
+            val numNapsEditText = EditText(context).apply {
+                hint = "Baby $i Number of Naps"
+                inputType = android.text.InputType.TYPE_CLASS_NUMBER
+                id = View.generateViewId()
+            }
+            val radioGroup = RadioGroup(context).apply {
+                orientation = RadioGroup.HORIZONTAL
+                addView(RadioButton(context).apply {
+                    text = context.getString(R.string.years)
+                    id = View.generateViewId()
+                })
+                addView(RadioButton(context).apply {
+                    text = context.getString(R.string.months)
+                    id = View.generateViewId()
+                })
+                check(getChildAt(0).id) // Default selection to Years
+            }
             binding.babiesContainer.addView(babyNameEditText)
             binding.babiesContainer.addView(babyAgeEditText)
+            binding.babiesContainer.addView(numNapsEditText)
+            binding.babiesContainer.addView(radioGroup)
         }
         binding.babiesContainer.visibility = View.VISIBLE
         binding.saveButton.visibility = View.VISIBLE
@@ -58,16 +79,28 @@ class SettingsFragment : Fragment() {
     private fun saveBabyData() {
         val numBabies = binding.numBabiesSlider.value.toInt()
         val babyNames = mutableListOf<String>()
-        val babyAges = mutableListOf<Int>()
+        val babyAges = mutableListOf<Pair<Int, String>>()
+        val numNaps = mutableListOf<Int>()
         for (i in 0 until numBabies) {
-            val babyNameEditText = binding.babiesContainer.getChildAt(i * 2) as EditText
-            val babyAgeEditText = binding.babiesContainer.getChildAt(i * 2 + 1) as EditText
+            val babyNameEditText = binding.babiesContainer.getChildAt(i * 4) as EditText
+            val babyAgeEditText = binding.babiesContainer.getChildAt(i * 4 + 1) as EditText
+            val numNapsEditText = binding.babiesContainer.getChildAt(i * 4 + 2) as EditText
+            val radioGroup = binding.babiesContainer.getChildAt(i * 4 + 3) as RadioGroup
+            val selectedButtonId = radioGroup.checkedRadioButtonId
+            val ageUnit = when (selectedButtonId) {
+                radioGroup.getChildAt(0).id -> "Years"
+                radioGroup.getChildAt(1).id -> "Months"
+                else -> ""
+            }
             babyNames.add(babyNameEditText.text.toString())
-            babyAges.add(babyAgeEditText.text.toString().toIntOrNull() ?: 0)
+            val babyAge = babyAgeEditText.text.toString().toIntOrNull() ?: 0
+            babyAges.add(Pair(babyAge, ageUnit))
+            val naps = numNapsEditText.text.toString().toIntOrNull() ?: 0
+            numNaps.add(naps)
         }
         sharedViewModel.setBabyNames(babyNames)
         sharedViewModel.setBabyAges(babyAges)
-        sharedViewModel.setNumBabies(numBabies)
+        sharedViewModel.setNumNaps(numNaps)
     }
 
     override fun onDestroyView() {
