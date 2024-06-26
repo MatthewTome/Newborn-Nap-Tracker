@@ -6,4 +6,7 @@ interface MusicPlayerControlListener {
     fun stopSound()
     fun setSound(resourceId: Int)
     fun isPlaying(): Boolean
+    fun seekTo(position: Int)
+    fun getCurrentPosition(): Int
+    fun getDuration(): Int
 }

@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         // Add a listener for fragment changes
         navController.addOnDestinationChangedListener { _, destination, _ ->
             updateMiniPlayerVisibility(destination.id)
+            updateNavigationBarVisibility(destination.id)
         }
     }
 
@@ -124,19 +125,32 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
     override fun setSound(resourceId: Int) {
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer.create(this, resourceId)
-        // Notify MusicPlayerFragment to update image
-        val musicPlayerFragment = supportFragmentManager.findFragmentById(R.id.MusicPlayerFragment) as? MusicPlayerFragment
-        musicPlayerFragment?.updateImage(resourceId)
-        // Update mini player controls
         songSelected = true
         updateMiniPlayer(resourceId)
+
+        // Notify MusicPlayerFragment to update the song info
+        val musicPlayerFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+            ?.childFragmentManager?.fragments?.firstOrNull { it is MusicPlayerFragment } as? MusicPlayerFragment
+        musicPlayerFragment?.updateSongInfo(resourceId)
     }
 
     override fun isPlaying(): Boolean {
         return mediaPlayer?.isPlaying == true
     }
 
-    fun updateMiniPlayer(resourceId: Int) {
+    override fun seekTo(position: Int) {
+        mediaPlayer?.seekTo(position)
+    }
+
+    override fun getCurrentPosition(): Int {
+        return mediaPlayer?.currentPosition ?: 0
+    }
+
+    override fun getDuration(): Int {
+        return mediaPlayer?.duration ?: 0
+    }
+
+    private fun updateMiniPlayer(resourceId: Int) {
         val song = when (resourceId) {
             R.raw.lullaby -> Song("Lullaby", "Artist 1", R.raw.lullaby)
             R.raw.rain -> Song("Rain", "Artist 2", R.raw.rain)
@@ -153,8 +167,17 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
         )
     }
 
+    fun showMiniPlayer() {
+        findViewById<View>(R.id.music_player_controls).visibility = View.VISIBLE
+    }
+
     private fun updateMiniPlayerVisibility(currentFragmentId: Int) {
         val shouldShowMiniPlayer = songSelected && currentFragmentId != R.id.MusicPlayerFragment
         findViewById<View>(R.id.music_player_controls).visibility = if (shouldShowMiniPlayer) View.VISIBLE else View.GONE
+    }
+
+    private fun updateNavigationBarVisibility(currentFragmentId: Int) {
+        val navBar = findViewById<View>(R.id.bottom_navigation)
+        navBar.visibility = if (currentFragmentId == R.id.MusicPlayerFragment) View.GONE else View.VISIBLE
     }
 }

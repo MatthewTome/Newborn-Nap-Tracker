@@ -39,6 +39,7 @@ class SongAdapter(
         holder.itemView.setOnClickListener {
             listener?.setSound(song.resourceId)
             listener?.playSound()
+            (listener as? MainActivity)?.showMiniPlayer()
         }
     }
 

@@ -2,6 +2,8 @@ package com.example.newbornnaptracker
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,8 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class MusicPlayerFragment : Fragment() {
 
@@ -24,6 +28,7 @@ class MusicPlayerFragment : Fragment() {
     private lateinit var albumArt: ImageView
 
     private var listener: MusicPlayerControlListener? = null
+    private var handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,7 +73,19 @@ class MusicPlayerFragment : Fragment() {
             // Handle next button click
         }
 
-        // Update UI with song details and seek bar logic
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    listener?.seekTo(progress)
+                    updateCurrentTime(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        updateUI()
 
         return view
     }
@@ -78,16 +95,51 @@ class MusicPlayerFragment : Fragment() {
         listener = null
     }
 
-    fun updateImage(resourceId: Int) {
-        val imageResId = when (resourceId) {
-            R.raw.lullaby -> R.drawable.lullaby
-            R.raw.rain -> R.drawable.rain
-            else -> 0  // Default case, no image
+    private fun updateUI() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                listener?.let {
+                    val currentPosition = it.getCurrentPosition()
+                    seekBar.progress = currentPosition
+                    updateCurrentTime(currentPosition)
+                    if (it.isPlaying()) {
+                        playPauseButton.setImageResource(R.drawable.ic_pause)
+                    } else {
+                        playPauseButton.setImageResource(R.drawable.ic_play)
+                    }
+                }
+                handler.postDelayed(this, 1000)
+            }
+        }, 1000)
+    }
+
+    private fun updateCurrentTime(progress: Int) {
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(progress.toLong())
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(progress.toLong()) -
+                TimeUnit.MINUTES.toSeconds(minutes)
+        currentTime.text = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+    }
+
+    fun updateSongInfo(resourceId: Int) {
+        val song = when (resourceId) {
+            R.raw.lullaby -> Song("Lullaby", "Artist 1", R.raw.lullaby)
+            R.raw.rain -> Song("Rain", "Artist 2", R.raw.rain)
+            else -> Song("Unknown", "Unknown Artist", 0)
         }
-        if (imageResId != 0) {
-            albumArt.setImageResource(imageResId)
-            // Update mini player with the same album art
-            (activity as? MainActivity)?.updateMiniPlayer(resourceId)
-        }
+        songName.text = song.name
+        artistName.text = song.artist
+        albumArt.setImageResource(
+            when (song.resourceId) {
+                R.raw.lullaby -> R.drawable.lullaby
+                R.raw.rain -> R.drawable.rain
+                else -> R.drawable.ic_music_note
+            }
+        )
+        seekBar.max = listener?.getDuration() ?: 0
+        totalTime.text = String.format(Locale.getDefault(), "%02d:%02d",
+            TimeUnit.MILLISECONDS.toMinutes(seekBar.max.toLong()),
+            TimeUnit.MILLISECONDS.toSeconds(seekBar.max.toLong()) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(seekBar.max.toLong()))
+        )
     }
 }
