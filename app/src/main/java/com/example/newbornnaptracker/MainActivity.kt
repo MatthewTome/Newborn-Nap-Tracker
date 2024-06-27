@@ -159,8 +159,12 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
 
     private fun updateMiniPlayer(resourceId: Int) {
         val song = when (resourceId) {
-            R.raw.lullaby -> Song("Lullaby", "Artist 1", R.raw.lullaby)
-            R.raw.rain -> Song("Rain", "Artist 2", R.raw.rain)
+            R.raw.lullaby -> Song("Lullaby", "Sleep For Babies", R.raw.lullaby)
+            R.raw.rain -> Song("Rain", "Soothing Sounds", R.raw.rain)
+            R.raw.pianosleepmusic -> Song("Piano Sleep Music", "Sleep for Babies", R.raw.pianosleepmusic)
+            R.raw.lullabycalmingpiano -> Song("Lullaby Calming Piano", "Sleep for Babies", R.raw.lullabycalmingpiano)
+            R.raw.sweetdreams -> Song("Sweet Dreams", "Sleep for Babies", R.raw.sweetdreams)
+            R.raw.sleeplullaby -> Song("Sleep Lullaby", "Sleep for Babies", R.raw.sleeplullaby)
             else -> Song("Unknown", "Unknown Artist", 0)
         }
         songNameMini.text = song.name
@@ -169,6 +173,10 @@ class MainActivity : AppCompatActivity(), MusicPlayerControlListener {
             when (song.resourceId) {
                 R.raw.lullaby -> R.drawable.lullaby
                 R.raw.rain -> R.drawable.rain
+                R.raw.pianosleepmusic -> R.drawable.piano_sleep_music
+                R.raw.lullabycalmingpiano -> R.drawable.lullaby_calming_piano
+                R.raw.sweetdreams -> R.drawable.sweet_dreams
+                R.raw.sleeplullaby -> R.drawable.sleep_lullaby
                 else -> R.drawable.ic_music_note
             }
         )

@@ -52,8 +52,6 @@ android {
 }
 
 dependencies {
-
-    // Default
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -75,14 +73,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // Google Calender
-    implementation(libs.google.api.client)
-    implementation(libs.google.oauth.client.jetty)
-    implementation(libs.google.api.services.calendar)
-    implementation(libs.play.services.auth)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.material)
+    implementation(libs.androidx.transition)
 }

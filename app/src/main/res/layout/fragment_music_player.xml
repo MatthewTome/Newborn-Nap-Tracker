@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/album_title"
-        android:text="@string/album"
+        android:text="@string/album_title"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:layout_centerHorizontal="true"

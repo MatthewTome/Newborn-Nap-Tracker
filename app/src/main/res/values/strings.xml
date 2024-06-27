@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Newborn Nap Tracker</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Baby Settings</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Newborn Nap Tracker</string>
@@ -47,7 +47,7 @@
     <string name="artist_name">Artist Name</string>
     <string name="_0_00">0:00</string>
     <string name="album">ALBUM</string>
-    <string name="album_title">Album Title</string>
+    <string name="album_title">Sleeping Baby Collection</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="song_list_fragment_label">Songs</string>
     <string name="save">Save</string>

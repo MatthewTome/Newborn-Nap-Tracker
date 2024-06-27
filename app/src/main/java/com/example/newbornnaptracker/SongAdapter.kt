@@ -32,6 +32,10 @@ class SongAdapter(
             when (song.resourceId) {
                 R.raw.lullaby -> R.drawable.lullaby
                 R.raw.rain -> R.drawable.rain
+                R.raw.pianosleepmusic -> R.drawable.piano_sleep_music
+                R.raw.lullabycalmingpiano -> R.drawable.lullaby_calming_piano
+                R.raw.sweetdreams -> R.drawable.sweet_dreams
+                R.raw.sleeplullaby -> R.drawable.sleep_lullaby
                 else -> R.drawable.ic_music_note
             }
         )

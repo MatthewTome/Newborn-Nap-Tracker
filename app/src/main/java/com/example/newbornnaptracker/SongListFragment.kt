@@ -36,8 +36,12 @@ class SongListFragment : Fragment() {
 
     private fun getSongs(): List<Song> {
         return listOf(
-            Song("Lullaby", "Artist 1", R.raw.lullaby),
-            Song("Rain", "Artist 2", R.raw.rain)
+            Song("Lullaby", "Sleep for Babies", R.raw.lullaby),
+            Song("Rain", "Soothing Sounds", R.raw.rain),
+            Song("Piano Sleep Music", "Sleep for Babies", R.raw.pianosleepmusic),
+            Song("Lullaby Calming Piano", "Sleep for Babies", R.raw.lullabycalmingpiano),
+            Song("Sweet Dreams", "Sleep for Babies", R.raw.sweetdreams),
+            Song("Sleep Lullaby", "Sleep for Babies", R.raw.sleeplullaby)
         )
     }
 }
