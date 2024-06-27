@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
     // Sleep Cycle
-    private val _sleepRecommendations = MutableLiveData<Map<Int, List<String>>>()
-    val sleepRecommendations: LiveData<Map<Int, List<String>>> = _sleepRecommendations
+    private val _sleepPredictions = MutableLiveData<Map<Int, List<String>>>()
+    val sleepPredictions: LiveData<Map<Int, List<String>>> = _sleepPredictions
 
-    fun updateSleepRecommendations(babyIndex: Int, recommendations: List<String>) {
-        val currentRecommendations = _sleepRecommendations.value?.toMutableMap() ?: mutableMapOf()
-        currentRecommendations[babyIndex] = recommendations
-        _sleepRecommendations.value = currentRecommendations
+    fun updateSleepPredictions(babyIndex: Int, predictions: List<String>) {
+        val currentPredictions = _sleepPredictions.value?.toMutableMap() ?: mutableMapOf()
+        currentPredictions[babyIndex] = predictions
+        _sleepPredictions.value = currentPredictions
     }
 
     // Music Player
@@ -42,6 +42,7 @@ class SharedViewModel : ViewModel() {
 
     fun setBabyNames(names: List<String>) {
         _babyNames.value = names
+        _numBabies.value = names.size
     }
 
     fun setSelectedBabyIndex(index: Int) {

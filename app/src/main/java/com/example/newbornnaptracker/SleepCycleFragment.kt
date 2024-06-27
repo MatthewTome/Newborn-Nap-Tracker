@@ -15,6 +15,7 @@ import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
 import java.util.Locale
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 
 class SleepCycleFragment : Fragment() {
@@ -78,15 +79,18 @@ class SleepCycleFragment : Fragment() {
             val minute = binding.minutePicker.value
             val period = amPmValues[binding.amPmPicker.value]
             val sleepTime = String.format(Locale.US, "%d:%02d%s", hour, minute, period)
-            val recommendations = viewModel.trackSleep(sleepTime)
+            val predictions = viewModel.trackSleep(sleepTime)
             val selectedBabyIndex = sharedViewModel.selectedBabyIndex.value ?: 0
-            sharedViewModel.updateSleepRecommendations(selectedBabyIndex, recommendations)
 
-            displayRecommendations(recommendations)
+            // Log the update
+            Log.d("SleepCycleFragment", "Updating sleep predictions for baby $selectedBabyIndex with $predictions")
+
+            sharedViewModel.updateSleepPredictions(selectedBabyIndex, predictions)
+
+            displayPredictions(predictions)
 
             if (binding.addToCalendarChip.isChecked) {
                 if (checkCalendarPermissions()) {
-                    viewModel.addToCalendar(requireContext())
                     Toast.makeText(context, "Added to calendar", Toast.LENGTH_SHORT).show()
                 } else {
                     requestCalendarPermissions()
@@ -97,11 +101,11 @@ class SleepCycleFragment : Fragment() {
         setupBabyRadioButtons()
         setupAddToCalendarChip()
 
-        // Observe sleep recommendations to update UI when data changes
-        sharedViewModel.sleepRecommendations.observe(viewLifecycleOwner) { recommendations ->
+        // Observe sleep predictions to update UI when data changes
+        sharedViewModel.sleepPredictions.observe(viewLifecycleOwner) { predictions ->
             val selectedBabyIndex = sharedViewModel.selectedBabyIndex.value ?: 0
-            val babyRecommendations = recommendations[selectedBabyIndex] ?: emptyList()
-            displayRecommendations(babyRecommendations)
+            val babyPredictions = predictions[selectedBabyIndex] ?: emptyList()
+            displayPredictions(babyPredictions)
         }
     }
 
@@ -136,11 +140,11 @@ class SleepCycleFragment : Fragment() {
         }
     }
 
-    private fun displayRecommendations(recommendations: List<String>) {
-        if (recommendations.size == 1 && recommendations[0] == "Invalid time format") {
+    private fun displayPredictions(predictions: List<String>) {
+        if (predictions.size == 1 && predictions[0] == "Invalid time format") {
             binding.resultTextView.text = getString(R.string.invalid_time_format)
         } else {
-            val formattedRecommendations = recommendations.mapIndexed { index, time ->
+            val formattedPredictions = predictions.mapIndexed { index, time ->
                 val boldTime = "<b>$time</b>"
                 when (index) {
                     0 -> "Next nap: $boldTime"
@@ -148,7 +152,7 @@ class SleepCycleFragment : Fragment() {
                     else -> "Finally: $boldTime"
                 }
             }
-            binding.resultTextView.text = Html.fromHtml(formattedRecommendations.joinToString("<br><br>"), Html.FROM_HTML_MODE_COMPACT)
+            binding.resultTextView.text = Html.fromHtml(formattedPredictions.joinToString("<br><br>"), Html.FROM_HTML_MODE_COMPACT)
         }
     }
 

@@ -26,39 +26,72 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.sleepRecommendations.observe(viewLifecycleOwner) { recommendations ->
-            displayRecommendations(recommendations)
+        sharedViewModel.numBabies.observe(viewLifecycleOwner) {
+            updateDisplay()
+        }
+
+        sharedViewModel.babyNames.observe(viewLifecycleOwner) {
+            updateDisplay()
+        }
+
+        sharedViewModel.sleepPredictions.observe(viewLifecycleOwner) {
+            updateDisplay()
         }
     }
 
-    private fun displayRecommendations(recommendationsMap: Map<Int, List<String>>) {
+    private fun updateDisplay() {
         val numBabies = sharedViewModel.numBabies.value ?: 0
         val babyNames = sharedViewModel.babyNames.value ?: emptyList()
-        val allRecommendations = StringBuilder()
+        val predictionsMap = sharedViewModel.sleepPredictions.value ?: emptyMap()
+
+        if (numBabies == 0 || babyNames.isEmpty()) {
+            binding.titleTextView.text = Html.fromHtml(getString(R.string.intro_message), Html.FROM_HTML_MODE_COMPACT)
+            binding.textviewFirst.text = getString(R.string.empty)
+            return
+        }
+
+        if (predictionsMap.isEmpty()) {
+            binding.titleTextView.text = Html.fromHtml(getString(R.string.no_nap_predictions), Html.FROM_HTML_MODE_COMPACT)
+            binding.textviewFirst.text = getString(R.string.empty)
+            return
+        }
+
+        binding.titleTextView.text = Html.fromHtml(getString(R.string.nap_predictions), Html.FROM_HTML_MODE_COMPACT)
+        displayPredictions(numBabies, babyNames, predictionsMap)
+    }
+
+    private fun displayPredictions(numBabies: Int, babyNames: List<String>, predictionsMap: Map<Int, List<String>>) {
+        val allPredictions = StringBuilder()
 
         for (i in 0 until numBabies) {
-            allRecommendations.append("<h2>${babyNames[i]}</h2>")
-            val recommendations = recommendationsMap[i] ?: emptyList()
-            if (recommendations.isNotEmpty()) {
-                val formattedRecommendations = recommendations.mapIndexed { index, time ->
+            val babyName = "<b>${babyNames.getOrElse(i) { "Baby $i" }}</b><br>"
+            allPredictions.append(babyName)
+
+            val predictions = predictionsMap[i] ?: emptyList()
+
+            if (predictions.isNotEmpty()) {
+                val formattedPredictions = predictions.mapIndexed { index, time ->
                     val boldTime = "<b>$time</b>"
                     when (index) {
-                        0 -> "Next nap: $boldTime"
-                        1 -> "Then: $boldTime"
-                        2 -> "Finally: $boldTime"
+                        0 -> "Next nap: $boldTime<br>"
+                        1 -> "Then: $boldTime<br>"
+                        2 -> "Finally: $boldTime<br>"
                         else -> ""
                     }
                 }
-                allRecommendations.append(formattedRecommendations.joinToString("<br>")).append("<br><br>")
+                formattedPredictions.forEach {
+                    allPredictions.append(it)
+                }
                 if (i < numBabies - 1) {
-                    allRecommendations.append("<hr>")
+                    allPredictions.append("<br>------------------------<br><br>")
                 }
             } else {
-                allRecommendations.append(getString(R.string.no_naps_scheduled)).append("<br><br>")
+                allPredictions.append(getString(R.string.no_naps_scheduled)).append("<br><br>")
             }
         }
 
-        binding.textviewFirst.text = Html.fromHtml(allRecommendations.toString(), Html.FROM_HTML_MODE_COMPACT)
+        val finalText = allPredictions.toString()
+        binding.textviewFirst.text = Html.fromHtml(finalText, Html.FROM_HTML_MODE_COMPACT)
     }
 
     override fun onDestroyView() {

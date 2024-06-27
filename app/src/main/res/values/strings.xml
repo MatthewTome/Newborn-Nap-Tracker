@@ -56,5 +56,17 @@
     <string name="months">Months</string>
     <string name="slider_text">How many different babies should we track naps for?</string>
     <string name="slider">This is a slider</string>
-
+    <string name="title_text">Predicted nap times for today:</string>
+    <string name="use_sleep_cycle">Please use Sleep Cycle to get nap predictions.</string>
+    <string name="nap_predictions"><![CDATA[
+        <b>Nap Predictions</b>
+    ]]></string>
+    <string name="no_nap_predictions">No nap predictions available. Please use Sleep Cycle to add nap data.</string>
+    <string name="empty" />
+    <string name="intro_message"><![CDATA[
+        <br><br><br><br>Welcome!<br><br><br><br>
+        The <b><u>Sleep Cycle</u></b> tab will help you get predictions on when your baby will need their next nap.<br><br><br><br>
+        The <b><u>Add Nap</u></b> tab will let you add a more detailed nap to track alongside your Google Calendar.<br><br><br><br>
+        And finally, the <b><u>Sound Machine</u></b> tab can assist you in helping your baby fall asleep.
+    ]]></string>
 </resources>
