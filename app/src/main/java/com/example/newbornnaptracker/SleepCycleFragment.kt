@@ -1,22 +1,21 @@
 package com.example.newbornnaptracker
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.core.content.ContextCompat
 import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
-import com.google.android.material.chip.Chip
-import android.text.Html
+import java.util.Locale
 import android.Manifest
 import android.content.pm.PackageManager
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import java.util.Locale
 
 class SleepCycleFragment : Fragment() {
 
@@ -98,20 +97,18 @@ class SleepCycleFragment : Fragment() {
         setupBabyRadioButtons()
         setupAddToCalendarChip()
 
-        // Observe babyAges LiveData
-        sharedViewModel.babyAges.observe(viewLifecycleOwner) { babyAges ->
-            if (babyAges.isNotEmpty()) {
-                setupNapChips(sharedViewModel.selectedBabyIndex.value ?: 0)
-            } else {
-                // Handle empty list case
-                binding.napChipGroup.removeAllViews()
-            }
+        // Observe sleep recommendations to update UI when data changes
+        sharedViewModel.sleepRecommendations.observe(viewLifecycleOwner) { recommendations ->
+            val selectedBabyIndex = sharedViewModel.selectedBabyIndex.value ?: 0
+            val babyRecommendations = recommendations[selectedBabyIndex] ?: emptyList()
+            displayRecommendations(babyRecommendations)
         }
     }
 
     private fun setupBabyRadioButtons() {
         val radioGroup = binding.babyRadioGroup
         radioGroup.removeAllViews()
+
         sharedViewModel.babyNames.observe(viewLifecycleOwner) { babyNames ->
             babyNames.forEachIndexed { index, name ->
                 val radioButton = RadioButton(context).apply {
@@ -119,14 +116,12 @@ class SleepCycleFragment : Fragment() {
                     id = View.generateViewId()
                     setOnClickListener {
                         sharedViewModel.setSelectedBabyIndex(index)
-                        setupNapChips(index)
                     }
                 }
                 radioGroup.addView(radioButton)
                 if (index == 0) {
                     radioButton.isChecked = true
                     sharedViewModel.setSelectedBabyIndex(index)
-                    setupNapChips(index)
                 }
             }
         }
@@ -141,37 +136,15 @@ class SleepCycleFragment : Fragment() {
         }
     }
 
-    private fun setupNapChips(babyIndex: Int) {
-        val napChipGroup = binding.napChipGroup
-        napChipGroup.removeAllViews()
-        val numNaps = sharedViewModel.numNaps.value?.get(babyIndex) ?: 0
-        if (numNaps > 0) {
-            for (i in 1..numNaps) {
-                val chip = Chip(context).apply {
-                    text = i.toString()
-                    isCheckable = true
-                    setChipBackgroundColorResource(R.color.white)
-                    setTextColor(ContextCompat.getColor(context, R.color.black))
-                    setOnClickListener {
-                        // Handle chip click
-                    }
-                }
-                napChipGroup.addView(chip)
-            }
-        }
-    }
-
     private fun displayRecommendations(recommendations: List<String>) {
         if (recommendations.size == 1 && recommendations[0] == "Invalid time format") {
             binding.resultTextView.text = getString(R.string.invalid_time_format)
         } else {
             val formattedRecommendations = recommendations.mapIndexed { index, time ->
                 val boldTime = "<b>$time</b>"
-                val exclamation = if (index == 0) "!" else ""
                 when (index) {
-                    0 -> "Entered time: $boldTime$exclamation"
-                    1 -> "Next nap: $boldTime"
-                    2 -> "Then: $boldTime"
+                    0 -> "Next nap: $boldTime"
+                    1 -> "Then: $boldTime"
                     else -> "Finally: $boldTime"
                 }
             }

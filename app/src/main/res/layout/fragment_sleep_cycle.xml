@@ -9,18 +9,18 @@
     android:gravity="top|center_horizontal"
     tools:context=".SleepCycleFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sleep_cycle_question"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
-
     <RadioGroup
         android:id="@+id/babyRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sleep_cycle_question"
+        android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
     <LinearLayout
@@ -63,13 +63,6 @@
         app:chipIcon="@drawable/ic_calendar"
         app:chipStyle="@style/Widget.MaterialComponents.Chip.Action.WhiteBackground"
         android:layout_marginTop="16dp" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/napChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal" />
 
     <TextView
         android:id="@+id/resultTextView"

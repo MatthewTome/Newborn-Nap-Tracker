@@ -30,36 +30,18 @@ class SharedViewModel : ViewModel() {
         _isPlaying.value = isPlaying
     }
 
-    // Settings data
+    // Settings
     private val _numBabies = MutableLiveData<Int>()
     val numBabies: LiveData<Int> get() = _numBabies
 
     private val _babyNames = MutableLiveData<List<String>>(listOf())
     val babyNames: LiveData<List<String>> get() = _babyNames
 
-    private val _babyAges = MutableLiveData<List<Pair<Int, String>>>(listOf())
-    val babyAges: LiveData<List<Pair<Int, String>>> get() = _babyAges
-
-    private val _numNaps = MutableLiveData<List<Int>>(listOf())
-    val numNaps: LiveData<List<Int>> get() = _numNaps
-
     private val _selectedBabyIndex = MutableLiveData<Int>()
     val selectedBabyIndex: LiveData<Int> get() = _selectedBabyIndex
 
-    fun setNumBabies(numBabies: Int) {
-        _numBabies.value = numBabies
-    }
-
     fun setBabyNames(names: List<String>) {
         _babyNames.value = names
-    }
-
-    fun setBabyAges(ages: List<Pair<Int, String>>) {
-        _babyAges.value = ages
-    }
-
-    fun setNumNaps(naps: List<Int>) {
-        _numNaps.value = naps
     }
 
     fun setSelectedBabyIndex(index: Int) {

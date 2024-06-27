@@ -50,11 +50,6 @@ class SettingsFragment : Fragment() {
                 inputType = android.text.InputType.TYPE_CLASS_NUMBER
                 id = View.generateViewId()
             }
-            val numNapsEditText = EditText(context).apply {
-                hint = "Baby $i Number of Naps"
-                inputType = android.text.InputType.TYPE_CLASS_NUMBER
-                id = View.generateViewId()
-            }
             val radioGroup = RadioGroup(context).apply {
                 orientation = RadioGroup.HORIZONTAL
                 addView(RadioButton(context).apply {
@@ -69,7 +64,7 @@ class SettingsFragment : Fragment() {
             }
             binding.babiesContainer.addView(babyNameEditText)
             binding.babiesContainer.addView(babyAgeEditText)
-            binding.babiesContainer.addView(numNapsEditText)
+
             binding.babiesContainer.addView(radioGroup)
         }
         binding.babiesContainer.visibility = View.VISIBLE
@@ -79,28 +74,11 @@ class SettingsFragment : Fragment() {
     private fun saveBabyData() {
         val numBabies = binding.numBabiesSlider.value.toInt()
         val babyNames = mutableListOf<String>()
-        val babyAges = mutableListOf<Pair<Int, String>>()
-        val numNaps = mutableListOf<Int>()
         for (i in 0 until numBabies) {
-            val babyNameEditText = binding.babiesContainer.getChildAt(i * 4) as EditText
-            val babyAgeEditText = binding.babiesContainer.getChildAt(i * 4 + 1) as EditText
-            val numNapsEditText = binding.babiesContainer.getChildAt(i * 4 + 2) as EditText
-            val radioGroup = binding.babiesContainer.getChildAt(i * 4 + 3) as RadioGroup
-            val selectedButtonId = radioGroup.checkedRadioButtonId
-            val ageUnit = when (selectedButtonId) {
-                radioGroup.getChildAt(0).id -> "Years"
-                radioGroup.getChildAt(1).id -> "Months"
-                else -> ""
-            }
+            val babyNameEditText = binding.babiesContainer.getChildAt(i * 3) as EditText
             babyNames.add(babyNameEditText.text.toString())
-            val babyAge = babyAgeEditText.text.toString().toIntOrNull() ?: 0
-            babyAges.add(Pair(babyAge, ageUnit))
-            val naps = numNapsEditText.text.toString().toIntOrNull() ?: 0
-            numNaps.add(naps)
         }
         sharedViewModel.setBabyNames(babyNames)
-        sharedViewModel.setBabyAges(babyAges)
-        sharedViewModel.setNumNaps(numNaps)
     }
 
     override fun onDestroyView() {
