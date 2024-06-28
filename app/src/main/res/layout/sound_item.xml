@@ -13,7 +13,7 @@
         android:contentDescription="@string/album_art" />
 
     <TextView
-        android:id="@+id/song_name_item"
+        android:id="@+id/sound_name_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/album_art_item"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/album_art_item"
         android:layout_marginStart="16dp"
-        android:layout_below="@id/song_name_item"
+        android:layout_below="@id/sound_name_item"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 </RelativeLayout>

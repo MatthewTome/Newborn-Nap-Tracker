@@ -16,29 +16,29 @@ import androidx.fragment.app.activityViewModels
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class MusicPlayerFragment : Fragment() {
+class SoundMachineFragment : Fragment() {
 
     private lateinit var playPauseButton: ImageButton
     private lateinit var prevButton: ImageButton
     private lateinit var nextButton: ImageButton
     private lateinit var seekBar: SeekBar
-    private lateinit var songName: TextView
+    private lateinit var soundName: TextView
     private lateinit var artistName: TextView
     private lateinit var currentTime: TextView
     private lateinit var totalTime: TextView
     private lateinit var albumArt: ImageView
 
-    private var listener: MusicPlayerControlListener? = null
+    private var listener: SoundMachineControlListener? = null
     private var handler: Handler = Handler(Looper.getMainLooper())
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MusicPlayerControlListener) {
+        if (context is SoundMachineControlListener) {
             listener = context
         } else {
-            throw RuntimeException("$context must implement MusicPlayerControlListener")
+            throw RuntimeException("$context must implement SoundMachineControlListener")
         }
     }
 
@@ -46,13 +46,13 @@ class MusicPlayerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_music_player, container, false)
+        val view = inflater.inflate(R.layout.fragment_sound_machine, container, false)
 
         playPauseButton = view.findViewById(R.id.play_pause_button)
         prevButton = view.findViewById(R.id.prev_button)
         nextButton = view.findViewById(R.id.next_button)
         seekBar = view.findViewById(R.id.seek_bar)
-        songName = view.findViewById(R.id.song_name)
+        soundName = view.findViewById(R.id.sound_name)
         artistName = view.findViewById(R.id.artist_name)
         currentTime = view.findViewById(R.id.current_time)
         totalTime = view.findViewById(R.id.total_time)
@@ -126,20 +126,20 @@ class MusicPlayerFragment : Fragment() {
         currentTime.text = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
     }
 
-    private fun updateSongInfo(resourceId: Int) {
-        val song = when (resourceId) {
-            R.raw.lullaby -> Song("Lullaby", "Sleep for Babies", R.raw.lullaby)
-            R.raw.rain -> Song("Rain", "Soothing Sounds", R.raw.rain)
-            R.raw.pianosleepmusic -> Song("Piano Sleep Music", "Sleep for Babies", R.raw.pianosleepmusic)
-            R.raw.lullabycalmingpiano -> Song("Lullaby Calming Piano", "Sleep for Babies", R.raw.lullabycalmingpiano)
-            R.raw.sweetdreams -> Song("Sweet Dreams", "Sleep for Babies", R.raw.sweetdreams)
-            R.raw.sleeplullaby -> Song("Sleep Lullaby", "Sleep for Babies", R.raw.sleeplullaby)
-            else -> Song("Unknown", "Unknown Artist", 0)
+    private fun updateSoundInfo(resourceId: Int) {
+        val sound = when (resourceId) {
+            R.raw.lullaby -> Sound("Lullaby", "Sleep for Babies", R.raw.lullaby)
+            R.raw.rain -> Sound("Rain", "Soothing Sounds", R.raw.rain)
+            R.raw.pianosleepmusic -> Sound("Piano Sleep Music", "Sleep for Babies", R.raw.pianosleepmusic)
+            R.raw.lullabycalmingpiano -> Sound("Lullaby Calming Piano", "Sleep for Babies", R.raw.lullabycalmingpiano)
+            R.raw.sweetdreams -> Sound("Sweet Dreams", "Sleep for Babies", R.raw.sweetdreams)
+            R.raw.sleeplullaby -> Sound("Sleep Lullaby", "Sleep for Babies", R.raw.sleeplullaby)
+            else -> Sound("Unknown", "Unknown Artist", 0)
         }
-        songName.text = song.name
-        artistName.text = song.artist
+        soundName.text = sound.name
+        artistName.text = sound.artist
         albumArt.setImageResource(
-            when (song.resourceId) {
+            when (sound.resourceId) {
                 R.raw.lullaby -> R.drawable.lullaby
                 R.raw.rain -> R.drawable.rain
                 R.raw.pianosleepmusic -> R.drawable.piano_sleep_music
@@ -161,7 +161,7 @@ class MusicPlayerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.resourceId.observe(viewLifecycleOwner) { resourceId ->
             resourceId?.let {
-                updateSongInfo(it)
+                updateSoundInfo(it)
             }
         }
     }

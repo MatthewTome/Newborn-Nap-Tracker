@@ -15,7 +15,6 @@ import com.example.newbornnaptracker.databinding.FragmentSleepCycleBinding
 import java.util.Locale
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 
 class SleepCycleFragment : Fragment() {
@@ -81,9 +80,6 @@ class SleepCycleFragment : Fragment() {
             val sleepTime = String.format(Locale.US, "%d:%02d%s", hour, minute, period)
             val predictions = viewModel.trackSleep(sleepTime)
             val selectedBabyIndex = sharedViewModel.selectedBabyIndex.value ?: 0
-
-            // Log the update
-            Log.d("SleepCycleFragment", "Updating sleep predictions for baby $selectedBabyIndex with $predictions")
 
             sharedViewModel.updateSleepPredictions(selectedBabyIndex, predictions)
 

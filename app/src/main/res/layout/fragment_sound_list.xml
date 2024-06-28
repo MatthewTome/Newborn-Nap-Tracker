@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SongListFragment">
+    tools:context=".SoundListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/song_list"
+        android:id="@+id/sound_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/music_player_controls" />
+        android:layout_above="@id/sound_machine_controls" />
 
     <include
-        layout="@layout/music_player_controls"
-        android:id="@+id/music_player_controls"
+        layout="@layout/sound_machine_controls"
+        android:id="@+id/sound_machine_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />

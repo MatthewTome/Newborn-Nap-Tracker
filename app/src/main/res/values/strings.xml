@@ -5,7 +5,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Newborn Nap Tracker</string>
     <string name="add_nap_fragment_label">Add Nap</string>
-    <string name="music_player_fragment_label">Music Player</string>
+    <string name="sound_machine_fragment_label">Sound Machine</string>
 
     <!-- Buttons -->
     <string name="next">Next</string>
@@ -17,20 +17,20 @@
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="exit">Exit</string>
-    <string name="open_music_player">Open Music Player</string>
+    <string name="open_sound_machine">Open Sound Machine</string>
     <string name="sleep_cycle">Sleep Cycle</string>
     <string name="track_sleep">Calculate</string>
 
     <string name="no_naps_scheduled">No naps scheduled yet. Use the Sleep Cycle button to plan naps.</string>
 
-    <!-- Songs -->
+    <!-- Sounds -->
     <string-array name="sound_list">
         <item>Lullaby</item>
         <item>Rain</item>
     </string-array>
 
     <!-- Text -->
-    <string name="title_activity_music_player">MusicPlayerActivity</string>
+    <string name="title_activity_sound_machine">MusicPlayerActivity</string>
     <string name="invalid_time_format">Invalid time format</string>
     <string name="next_predicted_sleep_time">The next sleep time after that will likely be: %1$s</string>
     <string name="and_then_sleep_time">And then after that around: %1$s</string>
@@ -39,17 +39,17 @@
     <string name="add_nap_description">Tap a date to add a nap to your calendar. This helps you track your baby\'s sleep schedule alongside your daily plans.</string>
 
     <!--  -->
-    <string name="music_player">Music Player</string>
+    <string name="sound_machine">Sound Machine</string>
     <string name="view_calendar">View Calendar</string>
     <string name="home">Home</string>
     <string name="album_art">Album Art</string>
-    <string name="song_name">Song Name</string>
+    <string name="sound_name">Sound Name</string>
     <string name="artist_name">Artist Name</string>
     <string name="_0_00">0:00</string>
     <string name="album">ALBUM</string>
     <string name="album_title">Sleeping Baby Collection</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="song_list_fragment_label">Songs</string>
+    <string name="sound_list_fragment_label">Sounds</string>
     <string name="save">Save</string>
     <string name="add_to_calendar">Add to Calendar</string>
     <string name="years">Years</string>

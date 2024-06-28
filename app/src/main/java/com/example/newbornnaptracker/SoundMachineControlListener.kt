@@ -1,6 +1,6 @@
 package com.example.newbornnaptracker
 
-interface MusicPlayerControlListener {
+interface SoundMachineControlListener {
     fun playSound()
     fun pauseSound()
     fun stopSound()

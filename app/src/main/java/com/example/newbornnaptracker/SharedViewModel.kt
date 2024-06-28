@@ -15,7 +15,7 @@ class SharedViewModel : ViewModel() {
         _sleepPredictions.value = currentPredictions
     }
 
-    // Music Player
+    // Sound Machine
     private val _resourceId = MutableLiveData<Int>()
     val resourceId: LiveData<Int> get() = _resourceId
 

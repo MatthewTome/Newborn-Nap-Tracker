@@ -25,15 +25,15 @@
 
     <fragment
         android:id="@+id/MusicPlayerFragment"
-        android:name="com.example.newbornnaptracker.MusicPlayerFragment"
-        android:label="@string/music_player_fragment_label"
-        tools:layout="@layout/fragment_music_player" />
+        android:name="com.example.newbornnaptracker.SoundMachineFragment"
+        android:label="@string/sound_machine_fragment_label"
+        tools:layout="@layout/fragment_sound_machine" />
 
     <fragment
-        android:id="@+id/SongListFragment"
-        android:name="com.example.newbornnaptracker.SongListFragment"
-        android:label="@string/song_list_fragment_label"
-        tools:layout="@layout/fragment_song_list" />
+        android:id="@+id/SoundListFragment"
+        android:name="com.example.newbornnaptracker.SoundListFragment"
+        android:label="@string/sound_list_fragment_label"
+        tools:layout="@layout/fragment_sound_list" />
 
     <fragment
         android:id="@+id/SettingsFragment"

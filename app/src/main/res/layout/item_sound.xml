@@ -5,10 +5,10 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/song_name"
+        android:id="@+id/sound_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/song_name"
+        android:text="@string/sound_name"
         android:textSize="18sp" />
 
     <TextView
@@ -16,6 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/artist_name"
-        android:layout_below="@id/song_name"
+        android:layout_below="@id/sound_name"
         android:textSize="14sp" />
 </RelativeLayout>
