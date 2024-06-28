@@ -1,5 +1,6 @@
 package com.example.newbornnaptracker
 
+import android.graphics.drawable.GradientDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -81,6 +83,15 @@ class MainActivity : AppCompatActivity(), SoundMachineControlListener {
 
         // Initialize the play/pause button state
         sharedViewModel.setPlaying(true)
+
+        // Create a GradientDrawable
+        val gradient = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            intArrayOf(0xFF030003.toInt(), 0xFF0A010C.toInt())
+        )
+        gradient.setGradientCenter(0.5f, 0.9f)
+        val layout = findViewById<CoordinatorLayout>(R.id.main_layout)
+        layout.background = gradient
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
